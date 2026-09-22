@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api, useMe, type Me } from "@/lib/client";
-import { IconCompass, IconHeart, IconUser } from "./Icons";
+import { IconCompass, IconHeart, IconRadar, IconUser } from "./Icons";
 
 interface UserRow extends Me {
   tagline: string;
@@ -44,6 +44,7 @@ export default function AppHeader() {
   const nav = [
     { href: "/agent", label: "我的月老", icon: IconCompass },
     { href: "/matches", label: "配對", icon: IconHeart },
+    { href: "/compare", label: "對照", icon: IconRadar },
     { href: "/profile", label: "我的檔案", icon: IconUser },
   ];
 

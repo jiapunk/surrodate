@@ -29,6 +29,14 @@ model AgentProfile {
 }
 
 // 一次 agent-to-agent 配對模擬
+// 單體 baseline 對照：同一個 runId 的一次性 LLM 報告（vs 蜂群 6-Part）
+model SoloBaseline {
+  id        String   @id @default(cuid())
+  runId     String   @unique
+  result    Json
+  createdAt DateTime @default(now())
+}
+
 model MatchRun {
   id        String   @id @default(cuid())
   userAId   String
