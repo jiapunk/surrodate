@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String        @id @default(cuid())
+  name      String
+  emoji     String        @default("🙂")
+  tagline   String        @default("")
+  isBot     Boolean       @default(false)
+  createdAt DateTime      @default(now())
+  profile   AgentProfile?
+}
+
+model AgentProfile {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status     String   @default("draft") // draft | ready
+  interview  Json? // onboarding transcript: [{ role, content, ts }]
+  compiled   Json? // structured CompiledProfile
+  visibility Json? // Record<string, boolean>
+  updatedAt  DateTime @updatedAt
+}
+
+// 一次 agent-to-agent 配對模擬
+model MatchRun {
+  id        String   @id @default(cuid())
+  userAId   String
+  userBId   String
+  status    String   @default("running") // running | completed | failed
+  events    Json     @default("[]") // live transcript events
+  reportA   Json? // userA's agent report
+  reportB   Json?
+  createdAt DateTime @default(now())
+
+  @@index([userAId])
+  @@index([userBId])
+}
+
+// 通過雙方門檻後產生的配對
+model Match {
+  id          String    @id @default(cuid())
+  runId       String?
+  userAId     String
+  userBId     String
+  status      String    @default("proposed") // proposed | matched | declined
+  approvedA   Boolean   @default(false)
+  approvedB   Boolean   @default(false)
+  scoreA      Int
+  scoreB      Int
+  icebreakers Json?
+  createdAt   DateTime  @default(now())
+  messages    Message[]
+
+  @@index([userAId])
+  @@index([userBId])
+}
+
+// 互動回饋：見面後的評價 → 代理人的篩選記憶
+model Feedback {
+  id        String   @id @default(cuid())
+  matchId   String
+  userId    String
+  round     Int      @default(1) // 1 = 第一次見面回饋；2 = 第二次約會回饋
+  metWith   Boolean? // 有見面嗎
+  rating    Int? // 1-5 整體感覺
+  tags      Json? // string[]：好聊 / 守時 / 話不投機 …
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@unique([matchId, userId, round])
+  @@index([userId])
+}
+
+// 見面後續約：正向回饋 → 自動推薦第二次約會（閉環）
+model SecondDate {
+  id             String   @id @default(cuid())
+  matchId        String   @unique
+  status         String   @default("proposed") // proposed | accepted
+  plan           Json
+  decisionSource String? // jev | llm | mock（企劃由哪一層決策挑選）
+  acceptedA      Boolean  @default(false)
+  acceptedB      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  matchId   String
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([matchId])
+}
+
+model SwarmPart {
+  id         String   @id // 穩定 ID：q:<runId>:A、r:<runId>:B、team:<hypId>
+  runId      String? // 互盤 run（pair 類）
+  teamId     String? // 隊伍假設（team 類）
+  kind       String // phase | questions | answers | report | team_eval
+  label      String   @default("")
+  status     String   @default("pending") // pending | done | failed
+  provider   String? // jev | llm | mock
+  model      String?
+  latencyMs  Int?
+  inputTokens Int?
+  retries    Int      @default(0)
+  confidence Float?
+  retained   Boolean? // 決策值是否原樣進入最終交付（不被改寫）
+  answers    Json? // 型別化 slot（決策層原始答案）
+  note       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([runId])
+  @@index([teamId])
+  @@index([status])
+}

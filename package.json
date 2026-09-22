@@ -1,0 +1,38 @@
+{
+  "name": "surrodate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "demo:reset": "tsx prisma/reset-demo.ts",
+    "demo:snapshot": "tsx scripts/demo-snapshot.ts",
+    "demo:restore": "tsx scripts/demo-restore.ts",
+    "setup": "npm i && prisma migrate dev --name init && tsx prisma/seed.ts",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "next": "16.3.5",
+    "openai": "^7.18.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5"
+  }
+}

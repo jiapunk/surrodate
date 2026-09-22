@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f3ee;
+  --card: #ffffff;
+  --ink: #26221c;
+  --ink-soft: #575146;
+  --muted: #8d867a;
+  --line: #e8e2d8;
+  --accent: #d9542b;
+  --accent-deep: #b8431f;
+  --accent-soft: #fbeee8;
+  --sage: #6f7d62;
+  --sage-soft: #eef1ea;
+  --amber: #a9751c;
+  --amber-soft: #f8f1e3;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --font-display: "Songti TC", "Noto Serif TC", "Source Han Serif TC",
+    "Songti SC", Georgia, "Times New Roman", serif;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC",
+    "Microsoft JhengHei", sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+/* 卡片：白紙 + 暖灰細框 + 極輕陰影，不用玻璃模糊 */
+@utility card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 1px 2px rgba(38, 34, 28, 0.03),
+    0 10px 30px -18px rgba(38, 34, 28, 0.14);
+}
+
+@utility card-flat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+/* 按鈕：實心，不用漸層與發光 */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+@utility btn-ink {
+  background: var(--ink);
+  color: #fff;
+}
+@utility btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+@utility btn-outline {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.btn-ink:hover { background: #3a352c; }
+.btn-accent:hover { background: var(--accent-deep); }
+.btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+.btn:active { transform: translateY(1px); }
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+@utility chip-on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility rise-in {
+  animation: rise-in 0.35s ease both;
+}
+
+@keyframes dot-blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 0.9; }
+}
+.typing-dot { animation: dot-blink 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #d9d2c6; border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
