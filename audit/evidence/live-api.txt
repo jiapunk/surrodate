@@ -1,0 +1,15 @@
+# Live API 证据（:3001 赛博月老，生成时间：2026-09-22 19:36 PDT）
+
+## GET /api/matches
+  proposals 2 | matched 1 | declined 0 | filtered 0
+    小柚   | JEV  | RULE 100 → 96
+    佩琪   | JEV  | RULE 50 → 72
+    阿哲   | JEV  | RULE 75 → 94
+
+## GET /api/feedback（代理人的记忆）
+  note: 已累積 2 筆回饋 · 含 1 次第二次約會 · 平均 5 分 · 對「插畫（3）、貓（3）、二手書店（3）」的對象評價最好
+  items 2 | secondDates 1 | avgRating 5
+
+## GET /api/matches/{matched}（续约闭环）
+  secondDate: accepted | source: jev | title: 展覽散步 ＋ 甜點收尾
+  myFeedback: yes | myFeedback2(round2): yes

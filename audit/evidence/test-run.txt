@@ -1,0 +1,20 @@
+# 端到端测试证据（生成时间：2026-09-22 19:40 PDT，commit：0aaab99）
+
+命令：npx playwright test
+
+Running 7 tests using 1 worker
+
+
+  ✓  1 tests/compare.spec.ts:12:5 › 單體 vs 蜂群對照：月老版單體 baseline 與取捨表 (10.3s)
+[decide] jev 不可用（HTTP 401 {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key）→ 下一層
+  ✓  2 tests/decision.spec.ts:9:5 › 決策層 fallback：無效 Jev key 時改用本機規則 (2.1s)
+  ✓  3 tests/decision.spec.ts:20:5 › 三段鏈順序：有 LLM key 時 Jev→LLM→規則，無 key 時純規則 (534ms)
+  ✓  4 tests/decision.spec.ts:44:5 › 決策層本機模式：未設定 key 時直接使用規則 (230ms)
+
+  ✓  5 tests/demo.spec.ts:9:5 › 完整流程：身份 → 指揮台出擊 → live 對聊 → 配對 → 同意 → 即時聊天 (17.7s)
+
+  ✓  6 tests/feedback.spec.ts:13:5 › 見面回饋進入代理人的記憶，並影響下一次配對 (21.8s)
+
+  ✓  7 tests/second-date.spec.ts:13:5 › 正向回饋自動產生第二次約會提案，接受後聊天室置頂 (12.6s)
+
+  7 passed (1.1m)

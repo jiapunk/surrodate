@@ -1,0 +1,19 @@
+# 静态质量闸门（生成时间：2026-09-22 19:34 PDT，commit：0aaab99）
+
+## tsc --noEmit
+exit=0（无输出）
+
+## npm run lint
+
+✖ 4 problems (0 errors, 4 warnings)
+
+
+## npm run build
+✓ Running next.config.ts took 12ms
+✓ Compiled successfully in 359ms
+  Generating static pages using 17 workers (0/9) ...
+  Generating static pages using 17 workers (2/9) 
+
+## prisma migrate status
+
+Database schema is up to date!
